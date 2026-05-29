@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CiCi Boss Chick — Untrained Momentum, LLC</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0C84A;
+    --gold-bright: #FFE066;
+    --gold-dim: #7A5F1A;
+    --black: #080808;
+    --off-black: #111111;
+    --card: #141414;
+    --card2: #1A1A1A;
+    --text: #E8E2D5;
+    --muted: #6B6459;
+    --white: #FDFAF4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── CANVAS GLITTER ─────────────────────────────── */
+  #glitter-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px 80px;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 10%, rgba(201,168,76,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .um-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(11px, 1.5vw, 15px);
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 48px;
+    text-transform: uppercase;
+    animation: fadeDown 1s ease both;
+  }
+
+  .hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: fadeDown 1s 0.1s ease both;
+  }
+
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 14vw, 180px);
+    line-height: 0.88;
+    color: var(--white);
+    animation: fadeDown 1s 0.2s ease both;
+    position: relative;
+  }
+
+  .hero-name span {
+    display: block;
+    background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 40%, var(--gold-light) 70%, var(--gold-bright) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s ease-in-out infinite, fadeDown 1s 0.3s ease both;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2.5vw, 24px);
+    color: var(--gold-dim);
+    margin-top: 20px;
+    letter-spacing: 0.05em;
+    animation: fadeDown 1s 0.4s ease both;
+  }
+
+  .hero-tagline {
+    margin-top: 32px;
+    font-size: clamp(13px, 1.8vw, 16px);
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.7;
+    animation: fadeDown 1s 0.5s ease both;
+  }
+
+  .hero-scroll {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeDown 1s 0.9s ease both;
+  }
+  .hero-scroll span { font-size: 10px; letter-spacing: 0.4em; color: var(--muted); text-transform: uppercase; }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.2); } }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── GLOBAL LAYOUT ───────────────────────────────── */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold-dim), transparent);
+    max-width: 200px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 72px);
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 48px;
+  }
+
+  .gold-line {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── STATS ROW ───────────────────────────────────── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-dim);
+    margin-bottom: 80px;
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stat-box {
+    background: var(--card);
+    padding: 32px 24px;
+    text-align: center;
+    transition: background 0.3s;
+  }
+  .stat-box:hover { background: var(--card2); }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ── ARTIST DOSSIER ──────────────────────────────── */
+  .dossier-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--gold-dim);
+  }
+
+  @media (max-width: 640px) {
+    .dossier-grid { grid-template-columns: 1fr; }
+  }
+
+  .dossier-cell {
+    background: var(--card);
+    padding: 24px 28px;
+    transition: background 0.25s;
+  }
+  .dossier-cell:hover { background: #1C1C1C; }
+  .dossier-cell:first-child { grid-column: 1 / -1; background: var(--card2); }
+
+  .d-key {
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .d-val {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .d-val.big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .d-note { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* ── DISCOGRAPHY ─────────────────────────────────── */
+  .tracks-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .track-row {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 28px;
+    background: var(--card);
+    border-left: 3px solid transparent;
+    transition: all 0.25s;
+    cursor: default;
+  }
+
+  .track-row:hover {
+    background: var(--card2);
+    border-left-color: var(--gold);
+    transform: translateX(4px);
+  }
+
+  .track-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--gold-dim);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .track-info { }
+  .track-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .track-feat {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .track-feat em { color: var(--gold); font-style: normal; }
+
+  .track-meta { text-align: right; }
+  .track-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--gold-dim);
+  }
+  .track-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold-dim);
+    margin-top: 4px;
+  }
+
+  /* ── PLATFORMS ───────────────────────────────────── */
+  .platform-section {
+    margin-bottom: 56px;
+  }
+
+  .platform-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .platform-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-dim);
+    opacity: 0.4;
+  }
+
+  .platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2px;
+    background: var(--gold-dim);
+  }
+
+  .platform-card {
+    background: var(--card);
+    padding: 28px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .platform-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .platform-card.active::before {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 100%);
+  }
+  .platform-card.target::before {
+    background: linear-gradient(135deg, rgba(201,168,76,0.03) 0%, transparent 100%);
+  }
+
+  .platform-card:hover { background: #1C1C1C; }
+  .platform-card:hover::before { opacity: 1; }
+
+  .platform-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .platform-card.active .platform-icon {
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .platform-card.target .platform-icon {
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.15);
+  }
+
+  .platform-info { position: relative; z-index: 1; }
+  .platform-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .platform-status {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .platform-card.active .platform-status { color: var(--gold); }
+  .platform-card.target .platform-status { color: var(--muted); }
+
+  .platform-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .platform-card.active .platform-dot {
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  .platform-card.target .platform-dot {
+    background: transparent;
+    border: 1px solid var(--muted);
+  }
+
+  @keyframes pulse-dot {
+    0%,100% { box-shadow: 0 0 4px var(--gold); }
+    50% { box-shadow: 0 0 12px var(--gold), 0 0 24px rgba(201,168,76,0.3); }
+  }
+
+  /* ── PROPOSAL TEASER ─────────────────────────────── */
+  .proposal-block {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    padding: 0 24px;
+  }
+
+  .proposal-card {
+    background: var(--card2);
+    border: 1px solid var(--gold-dim);
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proposal-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .proposal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 64px);
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .proposal-title span {
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .proposal-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+
+  .proposal-terms {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2px;
+    background: var(--gold-dim);
+    margin-bottom: 40px;
+  }
+
+  .term-box {
+    background: var(--black);
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .term-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .term-label {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .what-we-do {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .what-we-do { grid-template-columns: 1fr; }
+    .proposal-card { padding: 36px 24px; }
+  }
+
+  .do-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .do-item::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 10px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  .footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 60px 24px 80px;
+    border-top: 1px solid #1E1E1E;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 5vw, 56px);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--gold-dim));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  .footer-sub {
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .footer-note {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── GLITTER BURST ON CLICK ──────────────────────── */
+  .burst {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="glitter-canvas"></canvas>
+
+<!-- ══ HERO ═══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="um-logo">Untrained Momentum, LLC — Exclusive Artist Proposal</div>
+  <div class="hero-label">This is You. This is Your Story.</div>
+  <h1 class="hero-name">
+    CiCi
+    <span>Boss Chick</span>
+  </h1>
+  <p class="hero-sub">Ciara McNeal &mdash; Grand Rapids, MI &bull; Hip-Hop / Rap</p>
+  <p class="hero-tagline">You built this from nothing. 7 releases. Live stages. Real followers. A whole catalog — all on your own. Imagine what happens when you have a team behind you.</p>
+  <div style="margin-top:24px; display:inline-block; padding:10px 24px; border:1px solid rgba(201,168,76,0.3); font-size:11px; letter-spacing:0.35em; color:var(--gold); text-transform:uppercase; opacity:0.8;">
+    ✦ &nbsp; Site Preview — Built exclusively for CiCi Boss Chick &nbsp; ✦
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- ══ STATS ══════════════════════════════════════════ -->
+<div class="stats-row">
+  <div class="stat-box">
+    <div class="stat-num">7</div>
+    <div class="stat-label">Releases on Record</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">1.7K</div>
+    <div class="stat-label">Facebook Followers</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">3+</div>
+    <div class="stat-label">Live Shows Found</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Platforms Already On</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num">4+</div>
+    <div class="stat-label">Years in the Game</div>
+  </div>
+</div>
+
+<!-- ══ ARTIST DOSSIER ══════════════════════════════════ -->
+<section class="section">
+  <div class="section-label">01 — Who She Is</div>
+  <h2 class="section-title">Artist Dossier</h2>
+
+  <div class="dossier-grid">
+    <div class="dossier-cell">
+      <div class="d-key">Stage Name</div>
+      <div class="d-val big">CiCi Boss Chick</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Legal Name</div>
+      <div class="d-val">Ciara McNeal</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Genre</div>
+      <div class="d-val">Hip-Hop / Rap</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Based In</div>
+      <div class="d-val">Grand Rapids, MI</div>
+      <div class="d-note">Born &amp; raised: Illinois</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Education</div>
+      <div class="d-val">East High School</div>
+      <div class="d-note">Grand Rapids Community College</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Website</div>
+      <div class="d-val">hardnsoulent.com</div>
+      <div class="d-note">Existing site — needs artist optimization</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Distribution</div>
+      <div class="d-val">DistroKid (Self-Released)</div>
+      <div class="d-note">Label imprint: 4092094 Records DK</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Prior Label / Mgmt</div>
+      <div class="d-val">PRO FAM ENT.</div>
+      <div class="d-note">Launched debut single "You Can Get It" — Oct 2021</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Facebook</div>
+      <div class="d-val">@ciara.mcneal.71</div>
+      <div class="d-note">1.7K followers · Subscriber Hub active · "New Release Coming" pinned</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Instagram</div>
+      <div class="d-val">@cici_boss_chick</div>
+      <div class="d-note">208 followers · 42 posts</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">Press / Features</div>
+      <div class="d-val">Next2Blow Podcast Series</div>
+      <div class="d-note">Featured — documented appearance</div>
+    </div>
+    <div class="dossier-cell">
+      <div class="d-key">SoundCloud</div>
+      <div class="d-val">CiCi Boss Chick</div>
+      <div class="d-note">Profile live — 0 tracks uploaded · immediate opportunity</div>
+    </div>
+    <div class="dossier-cell" style="grid-column:1/-1; background:#0F0E09; border-left:3px solid var(--gold);">
+      <div class="d-key" style="color:var(--gold-bright);">🔥 Active Right Now</div>
+      <div class="d-val" style="font-size:16px; color:var(--gold);">New release in progress — pinned to her Facebook featured section.</div>
+      <div class="d-note" style="margin-top:6px;">This is exactly the moment management needs to be in place. Let's make sure it lands right.</div>
+    </div>
+    <div class="dossier-cell" style="grid-column:1/-1;">
+      <div class="d-key">Artist Bio</div>
+      <div class="d-val" style="font-size:15px; color:var(--muted); line-height:1.7; font-style:italic;">"Been spitting lyrics using my versatile in Rap for years, Born In Raised in Illinois live in Michigan, always been a hustler making things happen."</div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- ══ DISCOGRAPHY ═════════════════════════════════════ -->
+<section class="section">
+  <div class="section-label">02 — What She's Built</div>
+  <h2 class="section-title">Full Discography</h2>
+
+  <div class="tracks-grid">
+    <div class="track-row" style="border-left-color: var(--gold); background: #161410;">
+      <div class="track-num" style="color:var(--gold);">01</div>
+      <div class="track-info">
+        <div class="track-title">IMMA BO$$</div>
+        <div class="track-feat">2:17 &nbsp;·&nbsp; Most recent release &nbsp;·&nbsp; <em>Apple Music · Spotify · Amazon Music</em></div>
+      </div>
+      <div class="track-meta">
+        <div class="track-year" style="color:var(--gold);">2024</div>
+        <div class="track-badge" style="border-color:var(--gold); color:var(--gold);">Latest</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="track-num">02</div>
+      <div class="track-info">
+        <div class="track-title">No Hinges</div>
+        <div class="track-feat">Solo release</div>
+      </div>
+      <div class="track-meta">
+        <div class="track-year">2023</div>
+        <div class="track-badge">Single</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="track-num">03</div>
+      <div class="track-info">
+        <div class="track-title">Heart in the Streets</div>
+        <div class="track-feat">Solo release</div>
+      </div>
+      <div class="track-meta">
+        <div class="track-year">2023</div>
+        <div class="track-badge">Single</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="track-num">04</div>
+      <div class="track-info">
+        <div class="track-title">Boss Chick Chronicals</div>
+        <div class="track-feat">Includes <em>"Crazy Sexy Cool"</em></div>
+      </div>
+      <div class="track-meta">
+        <div class="track-year">2022</div>
+        <div class="track-badge">EP/Single</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="track-num">05</div>
+      <div class="track-info">
+        <div class="track-title">DARK NIGHTS</div>
+        <div class="track-feat">Solo release</div>
+      </div>
+      <div class="track-meta">
+        <div class="track-year">2022</div>
+        <div class="track-badge">Single</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="track-num">06</div>
+      <div class="track-info">
+        <div class="track-title">$Tack$</div>
+        <div class="track-feat">feat. <em>MERCY JAY &amp; Breanna Marin</em> &nbsp;·&nbsp; Featured artist</div>
+      </div>
+      <div class="track-meta">
+        <div class="track-year">2022</div>
+        <div class="track-badge">Feature</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="track-num">07</div>
+      <div class="track-info">
+        <div class="track-title">You Can Get It</div>
+        <div class="track-feat">feat. <em>BEE JACK</em> &nbsp;·&nbsp; Debut single</div>
+      </div>
+      <div class="track-meta">
+        <div class="track-year">2021</div>
+        <div class="track-badge">Single</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- ══ LIVE PERFORMANCES ══════════════════════════════ -->
+<section class="section">
+  <div class="section-label">03 — She's Already on Stage</div>
+  <h2 class="section-title">Live Performance History</h2>
+
+  <div class="tracks-grid">
+    <div class="track-row" style="border-left-color: var(--gold); background: #161410;">
+      <div class="track-num" style="color:var(--gold); font-size:20px;">🎤</div>
+      <div class="track-info">
+        <div class="track-title">The HHEAT AWARDZ</div>
+        <div class="track-feat">Hosted by <em>Antholo-G / Grey Sky</em> &nbsp;·&nbsp; Featured via Next2Blow Podcast Series &nbsp;·&nbsp; Alongside Poe 1 aka Reality Check, Slide Xoulture</div>
+      </div>
+      <div class="track-meta">
+        <div class="track-badge" style="border-color:var(--gold); color:var(--gold);">Award Show</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="track-num" style="font-size:20px;">🎤</div>
+      <div class="track-info">
+        <div class="track-title">The Scooby-Blew 420 Comedy Show</div>
+        <div class="track-feat">BYOB · Doors 9PM · Show 9:30PM &nbsp;·&nbsp; <em>Another New World Comedy</em></div>
+      </div>
+      <div class="track-meta">
+        <div class="track-year">2023</div>
+        <div class="track-badge">Oct 27</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="track-num" style="font-size:20px;">🎤</div>
+      <div class="track-info">
+        <div class="track-title">Live in Fennville, MI</div>
+        <div class="track-feat">Documented by local audience &nbsp;·&nbsp; "CiCi Boss Chick last night in Fennville MI — follow her ASAP!"</div>
+      </div>
+      <div class="track-meta">
+        <div class="track-badge">Michigan</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top:24px; font-size:13px; color:var(--muted); line-height:1.8;">
+    These are only the performances <em>documented publicly on Facebook</em> — the real number is almost certainly higher. She is an active live performer with no booking infrastructure behind her. That changes now.
+  </p>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- ══ PLATFORMS ═══════════════════════════════════════ -->
+<section class="section">
+  <div class="section-label">04 — Her Digital Footprint</div>
+  <h2 class="section-title">Platforms</h2>
+
+  <!-- ACTIVE -->
+  <div class="platform-section">
+    <div class="platform-section-title">She's Already On</div>
+    <div class="platforms-grid">
+
+      <div class="platform-card active">
+        <div class="platform-icon">🎵</div>
+        <div class="platform-info">
+          <div class="platform-name">Apple Music</div>
+          <div class="platform-status">Live — 7 releases</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card active">
+        <div class="platform-icon">🟢</div>
+        <div class="platform-info">
+          <div class="platform-name">Spotify</div>
+          <div class="platform-status">Live — catalog distributed</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card active">
+        <div class="platform-icon">📦</div>
+        <div class="platform-info">
+          <div class="platform-name">Amazon Music</div>
+          <div class="platform-status">Live — confirmed 2024</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card active">
+        <div class="platform-icon">📸</div>
+        <div class="platform-info">
+          <div class="platform-name">Instagram</div>
+          <div class="platform-status">@cici_boss_chick · 208 followers</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card active" style="border-left: 3px solid var(--gold-dim);">
+        <div class="platform-icon" style="opacity:0.75;">📘</div>
+        <div class="platform-info">
+          <div class="platform-name">Facebook (Personal / Creator)</div>
+          <div class="platform-status">1.7K followers · Digital Creator · needs official artist page</div>
+        </div>
+        <div class="platform-dot" style="background:var(--gold-dim); box-shadow:none; animation:none;"></div>
+      </div>
+
+      <div class="platform-card active" style="border-left: 3px solid var(--gold-dim);">
+        <div class="platform-icon" style="opacity:0.5;">☁️</div>
+        <div class="platform-info">
+          <div class="platform-name" style="color:var(--muted);">SoundCloud</div>
+          <div class="platform-status" style="color:var(--gold-dim);">Profile live · ZERO tracks — fix this NOW</div>
+        </div>
+        <div class="platform-dot" style="background:var(--gold-dim); box-shadow:none; animation:none;"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TARGET -->
+  <div class="platform-section">
+    <div class="platform-section-title">We're Getting Her On</div>
+    <div class="platforms-grid">
+
+      <div class="platform-card target">
+        <div class="platform-icon">📘</div>
+        <div class="platform-info">
+          <div class="platform-name">Facebook Artist Page</div>
+          <div class="platform-status">Official page — separate from personal profile</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">▶️</div>
+        <div class="platform-info">
+          <div class="platform-name">YouTube / YouTube Music</div>
+          <div class="platform-status">Channel + Content ID monetization</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">🎶</div>
+        <div class="platform-info">
+          <div class="platform-name">TikTok</div>
+          <div class="platform-status">Content strategy + sound library</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">💎</div>
+        <div class="platform-info">
+          <div class="platform-name">TIDAL</div>
+          <div class="platform-status">Full catalog distribution</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">🌐</div>
+        <div class="platform-info">
+          <div class="platform-name">Deezer</div>
+          <div class="platform-status">Full catalog distribution</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">📻</div>
+        <div class="platform-info">
+          <div class="platform-name">Pandora</div>
+          <div class="platform-status">Artist profile + radio seeding</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">❤️</div>
+        <div class="platform-info">
+          <div class="platform-name">iHeartRadio</div>
+          <div class="platform-status">Artist page + station pitching</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">🔗</div>
+        <div class="platform-info">
+          <div class="platform-name">Smart Link Hub</div>
+          <div class="platform-status">Linktree / ToneDen — all platforms one link</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">📄</div>
+        <div class="platform-info">
+          <div class="platform-name">Electronic Press Kit</div>
+          <div class="platform-status">Professional EPK for booking</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+      <div class="platform-card target">
+        <div class="platform-icon">🌍</div>
+        <div class="platform-info">
+          <div class="platform-name">Official Artist Website</div>
+          <div class="platform-status">Brand hub — bio, music, booking</div>
+        </div>
+        <div class="platform-dot"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- ══ PROPOSAL TEASER ════════════════════════════════ -->
+<div class="proposal-block">
+  <div class="section-label" style="margin-bottom:20px;">05 — The Play</div>
+  <div class="proposal-card">
+    <h2 class="proposal-title">
+      You Did All of This.<br><span>By Yourself.</span>
+    </h2>
+    <p class="proposal-body">
+      7 releases. Live stages. 1.7K Facebook followers. A whole catalog on Apple Music, Spotify, and Amazon — and you did every bit of it alone, with no manager, no booking team, no backend. That is not a small thing. That is proof you are built for this. Now imagine what happens when Untrained Momentum is in your corner handling everything you shouldn't have to do yourself.
+    </p>
+
+    <div class="proposal-terms">
+      <div class="term-box">
+        <div class="term-num">20%</div>
+        <div class="term-label">Commission on Bookings &amp; Sales We Set Up</div>
+      </div>
+      <div class="term-box">
+        <div class="term-num">↑</div>
+        <div class="term-label">We Collaborate with Your Producer to Elevate You</div>
+      </div>
+    </div>
+
+    <div class="what-we-do">
+      <div class="do-item">Build your EPK &amp; artist website from scratch</div>
+      <div class="do-item">Optimize every streaming profile you already have</div>
+      <div class="do-item">Upload catalog to SoundCloud &amp; launch missing platforms</div>
+      <div class="do-item">Pitch your music to Spotify editorial playlists</div>
+      <div class="do-item">Set up YouTube Content ID &amp; monetize your catalog</div>
+      <div class="do-item">Build merch infrastructure (zero upfront inventory cost)</div>
+      <div class="do-item">Coordinate all booking — inbound &amp; outbound</div>
+      <div class="do-item">Audit your royalty collection — find any money left on the table</div>
+      <div class="do-item">Create your smart link hub — one link for everything</div>
+      <div class="do-item">Monthly reporting on streams, revenue &amp; growth</div>
+    </div>
+
+    <p style="margin-top:24px; font-size:11px; color:var(--muted); line-height:1.8; opacity:0.6;">
+      Agreement term: 12 months from signing date. A 12-month tail clause applies to deals, bookings, and revenue streams directly initiated or negotiated by Untrained Momentum, LLC following termination of this agreement. Full terms provided in the management agreement document.
+    </p>
+
+    <div style="margin-top:48px; padding-top:40px; border-top:1px solid #2A2A2A; text-align:center;">
+      <p style="font-family:'Bebas Neue',sans-serif; font-size:clamp(28px,4vw,52px); color:var(--white); line-height:1.1; margin-bottom:16px;">
+        The hustle is already there.<br>
+        <span style="background:linear-gradient(135deg,var(--gold-bright),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+          Now let's build the empire around it.
+        </span>
+      </p>
+      <p style="font-size:13px; color:var(--muted); letter-spacing:0.15em;">— Untrained Momentum, LLC</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-logo">Untrained Momentum, LLC</div>
+  <div class="footer-sub">Artist Management &bull; Backend Operations &bull; Revenue Development</div>
+  <p class="footer-note">
+    This dossier was prepared exclusively for CiCi Boss Chick (Ciara McNeal) as part of a formal management proposal. All research gathered from public platforms. May 2026.
+  </p>
+</footer>
+
+<!-- ══ GLITTER SCRIPT ══════════════════════════════════ -->
+<script>
+// ── CANVAS PARTICLE SYSTEM ────────────────────────────
+const canvas = document.getElementById('glitter-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+const COLORS = [
+  'rgba(255,224,102,',
+  'rgba(201,168,76,',
+  'rgba(240,200,74,',
+  'rgba(255,248,200,',
+  'rgba(255,255,255,',
+  'rgba(180,140,50,'
+];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function mkParticle(x, y, burst) {
+  const angle = Math.random() * Math.PI * 2;
+  const speed = burst ? (Math.random() * 5 + 2) : (Math.random() * 0.6 + 0.1);
+  return {
+    x: x ?? Math.random() * W,
+    y: y ?? Math.random() * H,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed - (burst ? 0 : Math.random() * 0.3),
+    size: burst ? (Math.random() * 5 + 2) : (Math.random() * 2.5 + 0.5),
+    alpha: burst ? 1 : (Math.random() * 0.7 + 0.3),
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    decay: burst ? (Math.random() * 0.025 + 0.01) : (Math.random() * 0.004 + 0.001),
+    twinkleSpeed: Math.random() * 0.06 + 0.02,
+    twinkleOffset: Math.random() * Math.PI * 2,
+    shape: Math.random() < 0.3 ? 'diamond' : 'circle',
+    rotate: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.1,
+    burst: !!burst
+  };
+}
+
+// initial ambient particles
+for (let i = 0; i < 120; i++) particles.push(mkParticle());
+
+let t = 0;
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  t++;
+
+  // spawn new ambient
+  if (t % 4 === 0 && particles.filter(p => !p.burst).length < 150) {
+    particles.push(mkParticle());
+  }
+
+  particles = particles.filter(p => p.alpha > 0);
+
+  for (let p of particles) {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += p.burst ? 0.08 : -0.003;
+    p.alpha -= p.decay;
+    p.rotate += p.rotSpeed;
+
+    if (!p.burst) {
+      const twinkle = 0.4 + 0.6 * Math.abs(Math.sin(t * p.twinkleSpeed + p.twinkleOffset));
+      p.currentAlpha = p.alpha * twinkle;
+    } else {
+      p.currentAlpha = p.alpha;
+    }
+
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotate);
+    ctx.globalAlpha = Math.max(0, p.currentAlpha);
+
+    if (p.shape === 'diamond') {
+      ctx.beginPath();
+      const s = p.size;
+      ctx.moveTo(0, -s * 1.4);
+      ctx.lineTo(s * 0.7, 0);
+      ctx.lineTo(0, s * 1.4);
+      ctx.lineTo(-s * 0.7, 0);
+      ctx.closePath();
+      ctx.fillStyle = p.color + p.currentAlpha + ')';
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.currentAlpha + ')';
+      ctx.fill();
+      // star cross
+      if (p.size > 1.5) {
+        ctx.strokeStyle = p.color + (p.currentAlpha * 0.5) + ')';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(-p.size * 2.5, 0); ctx.lineTo(p.size * 2.5, 0);
+        ctx.moveTo(0, -p.size * 2.5); ctx.lineTo(0, p.size * 2.5);
+        ctx.stroke();
+      }
+    }
+
+    ctx.restore();
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+
+// ── CLICK BURST ───────────────────────────────────────
+document.addEventListener('click', (e) => {
+  for (let i = 0; i < 40; i++) {
+    particles.push(mkParticle(e.clientX, e.clientY, true));
+  }
+});
+
+// ── SCROLL FADE IN ────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.section, .proposal-block, .stats-row, .gold-line').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
